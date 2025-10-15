@@ -1,6 +1,5 @@
 import UserCard from "@/components/userCard";
 import prisma from "@/utils/prisma/client";
-import Image from "next/image";
 
 export default async function Home() {
   const users = await prisma.user.findMany();

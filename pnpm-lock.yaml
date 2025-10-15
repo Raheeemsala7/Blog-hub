@@ -48,6 +48,9 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3
         version: 3.3.1
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^6.17.1
+        version: 6.17.1
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.14
@@ -556,6 +559,9 @@ packages:
 
   '@prisma/get-platform@6.17.1':
     resolution: {integrity: sha512-AKEn6fsfz0r482S5KRDFlIGEaq9wLNcgalD1adL+fPcFFblIKs1sD81kY/utrHdqKuVC6E1XSRpegDK3ZLL4Qg==}
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.17.1':
+    resolution: {integrity: sha512-67X3zAM2t+fSmwQUU3Jos5hkgP1d7OLfKC9SNQgFB/JZSS8u19KI8PZlvJ0ZCX4smrPuUySk4yJtVsCbdbenAg==}
 
   '@radix-ui/react-compose-refs@1.1.2':
     resolution: {integrity: sha512-z4eqJvfiNnFMHIIvXP3CY57y2WJs5g2v3X0zm9mEJkrkNv4rDxu+sg9Jh8EkXyeqBkB7SOcboo9dMVqhyrACIg==}
@@ -2517,6 +2523,8 @@ snapshots:
   '@prisma/get-platform@6.17.1':
     dependencies:
       '@prisma/debug': 6.17.1
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.17.1': {}
 
   '@radix-ui/react-compose-refs@1.1.2(@types/react@19.2.2)(react@19.1.0)':
     dependencies:
