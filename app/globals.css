@@ -120,3 +120,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #eff6ff , #fff , #f0fdfa);
+}
+.dark .bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, #0F172A , #0F172A);
+}
+
+
+
+
