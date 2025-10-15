@@ -11,7 +11,7 @@ export default function HomePage() {
           
 
             <section id="hero" className="pt-24 pb-20 relative overflow-hidden section-clickable">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-teal-50 dark:from-[#0F172A] dark:via-secondary dark:to-[#0F172A]"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-[#f0fdfa] dark:from-[#0F172A] dark:via-secondary dark:to-[#0F172A]"></div>
                 <div className="absolute top-20 left-10 w-72 h-72 bg-[#2563eb1a] rounded-full blur-3xl"></div>
                 <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#14b8a61a] rounded-full blur-3xl"></div>
 
@@ -37,7 +37,7 @@ export default function HomePage() {
                 </div>
             </section>
 
-            <section id="featured-articles" className="py-20 bg-gray-50 dark:bg-dark-secondary section-clickable">
+            <section id="featured-articles" className="py-20 bg-gray-50 dark:bg-[#1E293B] section-clickable">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4" >Featured Articles</h2>

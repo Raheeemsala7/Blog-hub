@@ -125,10 +125,10 @@
 
 
 .bg-gradient-to-br {
-    background-image: linear-gradient(to bottom right, #eff6ff , #fff , #f0fdfa);
+    background-image: linear-gradient(to bottom right, #eff6ff , #fff , #f0fdfa) !important;
 }
 .dark .bg-gradient-to-br {
-    background-image: linear-gradient(to bottom right, #0F172A , #0F172A);
+    background-image: linear-gradient(to bottom right, #0F172A , #0F172A) !important;
 }
 
 

@@ -4,7 +4,7 @@ import { ThemeToggle } from './theme-toggle'
 
 const Header = () => {
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-[#0f172ae6] backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 cursor-default-must">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#0f172ae6] backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 cursor-default-must">
             <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center">

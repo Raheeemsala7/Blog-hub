@@ -15,7 +15,7 @@ export default {
     theme: {
         extend: {
             colors: {
-                dark: withOpacity('#0F172A'),
+                "dark": withOpacity('#0F172A'),
                 'dark-secondary': withOpacity('#1E293B'),
                 primary: '#2563EB',
                 accent: '#14B8A6',
