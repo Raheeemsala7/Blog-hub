@@ -1,7 +1,6 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 import { signupAction } from '@/lib/prisma/auth'
@@ -19,14 +18,14 @@ export async function login(formData: FormData) {
     const { error } = await supabase.auth.signInWithPassword(data)
 
     if (error) {
-       console.log(error)
+        console.log(error)
     }
 
     // revalidatePath('/', 'layout')
     // redirect('/')
 }
 
-export async function signup(formData: FormData) {
+export async function signupToSupabaseAction(formData: FormData) {
     const supabase = await createClient()
 
 
@@ -50,20 +49,19 @@ export async function signup(formData: FormData) {
 
     if (data?.user) {
 
-        if (data?.user) {
 
-            const user = data.user
+        const user = data.user
 
-            const prismaUser = {
-                id: user.id,
-                email: user.email ,
-                name: credentials.username,
-            }
-
-
-            // نحفظ المستخدم في قاعدة بياناتنا عبر Prisma
-            await signupAction(prismaUser)
+        const prismaUser = {
+            id: user.id,
+            email: user.email,
+            name: credentials.username,
         }
+
+
+        // نحفظ المستخدم في قاعدة بياناتنا عبر Prisma
+        await signupAction(prismaUser)
+
     }
 
 
@@ -72,16 +70,18 @@ export async function signup(formData: FormData) {
         console.log("Error " + error)
         console.log("data " + data.session)
         return {
-            status: error.message,
+            status: "error",
+            message: error.message,
             user: null
         }
     } else if (data?.user?.identities?.length === 0) {
         return {
-            status: "User with this email already exists, please login",
+            status: "error",
+            message: "User with this email already exists, please login",
             user: null
         }
     }
 
     revalidatePath('/', 'layout')
-    return { status: "success", user: data.user }
+    return { status: "success", message: "User signed up successfully", user: data.user }
 }

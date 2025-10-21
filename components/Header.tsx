@@ -1,36 +1,59 @@
 import Link from 'next/link'
 import React from 'react'
 import { ThemeToggle } from './theme-toggle'
+import { Button, buttonVariants } from './ui/button'
 
 const Header = () => {
     return (
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-[#0f172ae6] backdrop-blur-lg border-b border-gray-200 dark:border-gray-700 cursor-default-must">
-            <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-xl flex items-center justify-center">
-                        <i className="text-white text-lg" data-fa-i2svg=""><svg className="svg-inline--fa fa-rocket" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="rocket" role="Image " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M156.6 384.9L125.7 354c-8.5-8.5-11.5-20.8-7.7-32.2c3-8.9 7-20.5 11.8-33.8L24 288c-8.6 0-16.6-4.6-20.9-12.1s-4.2-16.7 .2-24.1l52.5-88.5c13-21.9 36.5-35.3 61.9-35.3l82.3 0c2.4-4 4.8-7.7 7.2-11.3C289.1-4.1 411.1-8.1 483.9 5.3c11.6 2.1 20.6 11.2 22.8 22.8c13.4 72.9 9.3 194.8-111.4 276.7c-3.5 2.4-7.3 4.8-11.3 7.2v82.3c0 25.4-13.4 49-35.3 61.9l-88.5 52.5c-7.4 4.4-16.6 4.5-24.1 .2s-12.1-12.2-12.1-20.9V380.8c-14.1 4.9-26.4 8.9-35.7 11.9c-11.2 3.6-23.4 .5-31.8-7.8zM384 168a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"></path></svg></i>
-                    </div>
-                    <span className="text-xl font-bold text-gray-900 dark:text-white" >UXPilot</span>
-                </div>
-
-                <div className="hidden md:flex items-center space-x-8">
-                    <Link href={"/articles"} className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors cursor-pointer" >Home</Link>
-                    <Link href={"/articles"} className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors cursor-pointer" >Articles</Link>
-                    <Link href={"/articles"} className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors cursor-pointer" >Categories</Link>
-                    <Link href={"/articles"} className="text-gray-700 dark:text-gray-300 hover:text-primary transition-colors cursor-pointer" >Authors</Link>
-                </div>
-
-                <div className="flex items-center space-x-4">
+        <header className="sticky top-0 left-0 right-0 z-50 backdrop-blur-lg cursor-default-must">
+            <div className="w-full max-w-7xl mx-auto px-6 py-4">
+                <div className="flex justify-between items-center">
                     
-                    <ThemeToggle />
-                    <button className="px-4 py-2 text-primary border border-primary rounded-lg hover:bg-primary hover:text-white transition-colors" >
-                        Login
-                    </button>
-                    <button className="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-700 transition-colors" >
-                        Sign Up
-                    </button>
+
+
+                    <div className="flex justify-between items-center h-16">
+                        <div className="flex items-center space-x-2">
+                            <div className="w-11 h-11 bg-[#FF6B6B] rounded-xl flex items-center justify-center transform hover:scale-110 transition-transform duration-300">
+                                <div className="flex space-x-0.75 pb-1 h-full items-end">
+                                    <div className="w-1 h-4/5  bg-slate-900 rounded-full"></div>
+                                    <div className="w-1 h-3/5  bg-slate-900 rounded-full"></div>
+                                    <div className="w-1 h-2/5  bg-slate-900 rounded-full"></div>
+                                    <div className="w-1 h-4/5  bg-slate-900 rounded-full transform rotate-4"></div>
+                                </div>
+                            </div>
+                            <span className="text-xl text-[#FF6B6B] font-bold ">Nexus</span>
+                        </div>
+                    </div>
+
+                    <nav>
+                        <ul className='flex items-center gap-4'>
+                            <li>
+                                <Link href={"/"}>Home</Link>
+                            </li>
+                            <li>
+                                <Link href={"/explore"}>Explore</Link>
+                            </li>
+                            <li>
+                                <Link href={""}>Articles</Link>
+                            </li>
+                            <li>
+                                <Link href={""}>About</Link>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <div className='flex gap-4 items-center'>
+                        <Link href={"login"} className={buttonVariants()}>
+                            Sign in
+                        </Link>
+                        <Link href={"register"} className={buttonVariants()}>
+                            Sign in
+                        </Link >
+                        <ThemeToggle />
+                    </div>
+
                 </div>
-            </nav>
+            </div>
         </header>
     )
 }

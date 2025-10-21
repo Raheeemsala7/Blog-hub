@@ -3,7 +3,7 @@ import prisma from "@/utils/prisma/client"
 
 
 
-export const signupAction = async (user:User ) => {
+export const signupAction = async (user: User) => {
 
     const newUser = await prisma.user.create({
         data: {
