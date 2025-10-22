@@ -56,7 +56,7 @@ const ExplorePage = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">Explore Articles</h1>
                 <p className="text-gray-400 text-lg max-w-3xl">
-                    Dive into our diverse collection of articles, spanning technology, lifestyle, science, and more. Use the filters below to find exactly what you're looking for.
+                    Dive into our diverse collection of articles, spanning technology, lifestyle, science, and more. Use the filters below to find exactly what you&apos;re looking for.
                 </p>
             </div>
 

@@ -1,15 +1,13 @@
 import Link from 'next/link'
 import React from 'react'
 import { ThemeToggle } from './theme-toggle'
-import { Button, buttonVariants } from './ui/button'
+import { buttonVariants } from './ui/button'
 
 const Header = () => {
     return (
         <header className="sticky top-0 left-0 right-0 z-50 backdrop-blur-lg cursor-default-must">
             <div className="w-full max-w-7xl mx-auto px-6 py-4">
                 <div className="flex justify-between items-center">
-                    
-
 
                     <div className="flex justify-between items-center h-16">
                         <div className="flex items-center space-x-2">

@@ -1,4 +1,4 @@
-import { User } from "@/app/generated/prisma"
+import { User, UserRole } from "@/app/generated/prisma"
 import prisma from "@/utils/prisma/client"
 
 
@@ -9,11 +9,11 @@ export const signupAction = async (user: User) => {
         data: {
             id: user.id,
             email: user.email,
-            name: user.name,
+            name: "DDD",
             password: null,
             jobTitle: null,
-            avatar_url: null,
-            role: "READER", // أو "USER" لو enum عندك اسمه كده
+            avatar_url: user.avatar_url ? user.avatar_url : "",
+            role: "READER" as UserRole, 
             created_at: new Date(),
             updated_at: new Date(),
         },

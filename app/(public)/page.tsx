@@ -1,6 +1,5 @@
-import UserCard from "@/components/userCard";
-import prisma from "@/utils/prisma/client";
-import { BookOpen, Clock, GithubIcon, LinkedinIcon, PenLine, TwitterIcon, User } from "lucide-react";
+
+import {  Clock, GithubIcon, LinkedinIcon, TwitterIcon, User } from "lucide-react";
 import Link from "next/link";
 
 const articles = [

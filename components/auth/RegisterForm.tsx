@@ -2,7 +2,7 @@
 
 import { signupToSupabaseAction } from '@/actions/auth';
 import { signupFormSchema } from '@/schema/auth';
-import React, { useState, useTransition } from 'react'
+import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from 'zod';
@@ -19,9 +19,9 @@ import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 const RegisterForm = () => {
-  const [error, setError] = useState("");
   const [isPending, setTransition] = useTransition()
 
 
@@ -45,6 +45,8 @@ const RegisterForm = () => {
 
         const { status, message, user } = await signupToSupabaseAction(formDataToSubmit);
 
+        console.log(user)
+
         if (user && status === "success") {
           toast.success(message)
           redirect("/")
@@ -64,6 +66,7 @@ const RegisterForm = () => {
                 ? error.message
                 : "An unexpected error occurred, Please try again";
             toast.error(errorMessage)
+            console.log("Else Error" + error)
           }
 
 
@@ -188,13 +191,13 @@ const RegisterForm = () => {
       {/* Sign Up Link */}
       <div className="text-center mt-6">
         <p className="text-gray-400 text-sm">
-          Don't have an account?{' '}
-          <button
-            type="button"
-            className="text-secondary-foreground font-semibold transition-colors"
+          Don&apos;t have an account?
+          <Link
+            href={"/login"}
+            className="text-secondary-foreground font-semibold transition-colors ml-0.5"
           >
             Sign in
-          </button>
+          </Link>
         </p>
       </div>
 

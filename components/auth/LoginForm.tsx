@@ -2,7 +2,7 @@
 
 import { signupToSupabaseAction } from '@/actions/auth';
 import { signupFormSchema } from '@/schema/auth';
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from 'zod';
@@ -19,7 +19,6 @@ import { Button } from '../ui/button';
 import Link from 'next/link';
 
 const LoginForm = () => {
-    const [error, setError] = useState("");
 
 
     const form = useForm<z.infer<typeof signupFormSchema>>({
@@ -32,7 +31,6 @@ const LoginForm = () => {
     });
 
     async function onSubmit(values: z.infer<typeof signupFormSchema>) {
-        setError("");
 
         try {
             const formDataToSubmit = new FormData();
@@ -46,7 +44,8 @@ const LoginForm = () => {
                 error instanceof Error
                     ? error.message
                     : "An unexpected error occurred, Please try again";
-            setError(errorMessage);
+
+                    console.log(errorMessage)
         }
     }
     return (
@@ -157,11 +156,11 @@ const LoginForm = () => {
             {/* Sign Up Link */}
             <div className="text-center mt-6">
                 <p className="text-gray-400 text-sm">
-                    Don't have an account?{' '}
+                    Don&apos;t have an account?
                     <Link
                     href={"login"}
                         type="button"
-                        className="text-secondary hover:text-yellow-400 font-semibold transition-colors"
+                        className="text-secondary hover:text-yellow-400 font-semibold transition-colors ml-0.5"
                     >
                         Sign Up
                     </Link>
