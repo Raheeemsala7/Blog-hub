@@ -158,7 +158,7 @@ const LoginForm = () => {
                 <p className="text-gray-400 text-sm">
                     Don&apos;t have an account?
                     <Link
-                    href={"login"}
+                    href={"/register"}
                         type="button"
                         className="text-secondary hover:text-yellow-400 font-semibold transition-colors ml-0.5"
                     >

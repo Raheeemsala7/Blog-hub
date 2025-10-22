@@ -45,7 +45,7 @@ const Header = () => {
                             Sign in
                         </Link>
                         <Link href={"register"} className={buttonVariants()}>
-                            Sign in
+                            Sign up
                         </Link >
                         <ThemeToggle />
                     </div>
