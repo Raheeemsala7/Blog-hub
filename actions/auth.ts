@@ -3,27 +3,65 @@
 import { revalidatePath } from 'next/cache'
 
 import { createClient } from '@/utils/supabase/server'
-import { signupAction } from '@/lib/prisma/auth'
+import { logInAction, signupAction } from '@/lib/prisma/auth'
 import { UserRole } from '@/app/generated/prisma'
 
-export async function login(formData: FormData) {
-    const supabase = await createClient()
+export async function loginToSupabaseAction(formData: FormData) {
+    try {
+        const supabase = await createClient()
 
-    // type-casting here for convenience
-    // in practice, you should validate your inputs
-    const data = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string,
+
+        const credentials = {
+            email: formData.get('email') as string,
+            password: formData.get('password') as string,
+        }
+
+        const { error, data } = await supabase.auth.signInWithPassword({
+            email: credentials.email,
+            password: credentials.password,
+        })
+        if (error) {
+            console.log("Error " + error)
+            console.log("data " + data.session)
+
+            if (error.message === "Email not confirmed") {
+                return {
+                    status: "error",
+                    message: "Email not confirmed, please check your email",
+                    user: null
+                }
+            }
+            return {
+                status: "error",
+                message: error.message,
+                user: null
+            }
+        }
+
+        console.log(data)
+
+        if (data?.user) {
+            const user = data.user
+            const emailUser = user.email ?? credentials.email;
+            await logInAction(emailUser)
+        }
+
+        return { status: "success", message: "User signed up successfully", user: data.user }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log("Error " + error)
+            return {
+                status: "error",
+                message: error.message,
+                user: null
+            }
+        }
+        return {
+            status: "error",
+            message: "Unknown error occurred",
+            user: null
+        }
     }
-
-    const { error } = await supabase.auth.signInWithPassword(data)
-
-    if (error) {
-        console.log(error)
-    }
-
-    // revalidatePath('/', 'layout')
-    // redirect('/')
 }
 
 export async function signupToSupabaseAction(formData: FormData) {

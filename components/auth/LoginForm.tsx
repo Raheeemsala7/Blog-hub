@@ -1,8 +1,8 @@
 "use client"
 
-import { signupToSupabaseAction } from '@/actions/auth';
-import { signupFormSchema } from '@/schema/auth';
-import React from 'react'
+import { loginToSupabaseAction, signupToSupabaseAction } from '@/actions/auth';
+import { loginFormSchema } from '@/schema/auth';
+import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from 'zod';
@@ -17,54 +17,61 @@ import {
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
 
 const LoginForm = () => {
+    const [isPending, setTransition] = useTransition()
+    const router = useRouter()
 
 
-    const form = useForm<z.infer<typeof signupFormSchema>>({
-        resolver: zodResolver(signupFormSchema),
+    const form = useForm<z.infer<typeof loginFormSchema>>({
+        resolver: zodResolver(loginFormSchema),
         defaultValues: {
             email: "",
             password: "",
-            name: "",
         },
     });
 
-    async function onSubmit(values: z.infer<typeof signupFormSchema>) {
+    async function onSubmit(values: z.infer<typeof loginFormSchema>) {
+        setTransition(async () => {
 
-        try {
-            const formDataToSubmit = new FormData();
-            formDataToSubmit.append("email", values.email);
-            formDataToSubmit.append("password", values.password);
-            formDataToSubmit.append("name", values.name as string);
+            try {
+                const formDataToSubmit = new FormData();
+                formDataToSubmit.append("email", values.email);
+                formDataToSubmit.append("password", values.password);
+                const { status, message, user } = await loginToSupabaseAction(formDataToSubmit);
+                console.log(user)
+                console.log(message)
+                if (user && status === "success") {
+                    if (user.user_metadata.email_verified) {
+                        toast.success(message)
+                        router.push("/")
+                    } else {
+                        toast.success("Check your email to verify your account")
+                        // router.push("/login")
+                    }
+                } else {
+                    toast.error(message)
+                }
+            } catch (error) {
+                const errorMessage =
+                    error instanceof Error
+                        ? error.message
+                        : "An unexpected error occurred, Please try again";
 
-            await signupToSupabaseAction(formDataToSubmit);
-        } catch (error) {
-            const errorMessage =
-                error instanceof Error
-                    ? error.message
-                    : "An unexpected error occurred, Please try again";
+                console.log(errorMessage)
+            }
 
-                    console.log(errorMessage)
-        }
+
+        })
     }
     return (
         <>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-                    <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Name</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+
                     <FormField
                         control={form.control}
                         name="email"
@@ -94,7 +101,15 @@ const LoginForm = () => {
                     />
 
 
-                    <Button className='w-full' type="submit">Submit</Button>
+                    <Button disabled={isPending} className='w-full' type="submit">
+                        {isPending ?
+                            <>
+                                <Loader2 className='size-4 animate-spin transition-all' />
+                                Submiting...
+                            </>
+                            : "Submit"
+                        }
+                    </Button>
 
 
                 </form>
@@ -158,7 +173,7 @@ const LoginForm = () => {
                 <p className="text-gray-400 text-sm">
                     Don&apos;t have an account?
                     <Link
-                    href={"/register"}
+                        href={"/register"}
                         type="button"
                         className="text-secondary hover:text-yellow-400 font-semibold transition-colors ml-0.5"
                     >

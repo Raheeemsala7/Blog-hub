@@ -18,11 +18,12 @@ import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const RegisterForm = () => {
   const [isPending, setTransition] = useTransition()
+  const router = useRouter()
 
 
   const form = useForm<z.infer<typeof signupFormSchema>>({
@@ -48,8 +49,13 @@ const RegisterForm = () => {
         console.log(user)
 
         if (user && status === "success") {
-          toast.success(message)
-          redirect("/")
+          if (user.user_metadata.email_verified) {
+            toast.success(message)
+            router.push("/")
+          } else {
+            toast.success("Check your email to verify your account")
+            // router.push("/login")
+          }
         } else {
           toast.error(message)
         }

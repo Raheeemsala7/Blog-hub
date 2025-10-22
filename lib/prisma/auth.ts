@@ -13,13 +13,21 @@ export const signupAction = async (user: User) => {
             password: null,
             jobTitle: null,
             avatar_url: user.avatar_url ? user.avatar_url : "",
-            role: "READER" as UserRole, 
+            role: "READER" as UserRole,
             created_at: new Date(),
             updated_at: new Date(),
         },
     })
 
     return newUser
+}
+export const logInAction = async (email: string) => {
+    const existingUser = await prisma.user.findUnique({
+        where: {
+            email: email,
+        }
+    })
+    return existingUser
 }
 
 
