@@ -1,6 +1,6 @@
 "use client"
 
-import { loginToSupabaseAction, signupToSupabaseAction } from '@/actions/auth';
+import { loginToSupabaseAction, signInWithOAuthGoogle, signupToSupabaseAction } from '@/actions/auth';
 import { loginFormSchema } from '@/schema/auth';
 import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form';
@@ -134,6 +134,7 @@ const LoginForm = () => {
                     type="button"
                     variant="outline"
                     className="bg-slate-900 border-slate-700 text-white hover:bg-slate-800 hover:text-white"
+                    onClick={signInWithOAuthGoogle}
                 >
                     <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                         <path

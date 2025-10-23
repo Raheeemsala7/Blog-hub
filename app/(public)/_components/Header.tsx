@@ -1,9 +1,15 @@
 import Link from 'next/link'
 import React from 'react'
-import { ThemeToggle } from './theme-toggle'
-import { buttonVariants } from './ui/button'
+import { ThemeToggle } from '../../../components/theme-toggle'
+import { buttonVariants } from '../../../components/ui/button'
+import { createClient } from '@/utils/supabase/server'
+import UserData from './UserData'
 
-const Header = () => {
+const Header = async () => {
+
+    const supbase = await createClient()
+
+    const { data: { user } } = await supbase.auth.getUser()
     return (
         <header className="sticky top-0 left-0 right-0 z-50 backdrop-blur-lg cursor-default-must">
             <div className="w-full max-w-7xl mx-auto px-6 py-4">
@@ -41,12 +47,20 @@ const Header = () => {
                     </nav>
 
                     <div className='flex gap-4 items-center'>
-                        <Link href={"login"} className={buttonVariants()}>
-                            Sign in
-                        </Link>
-                        <Link href={"register"} className={buttonVariants()}>
-                            Sign up
-                        </Link >
+                        {user ?
+                            <>
+                                <UserData name={user?.user_metadata?.full_name || ""} email={user?.email || ""} image={user?.user_metadata?.avatar_url || ""} isAdmin={user?.user_metadata?.is_admin || false} />
+                            </>
+                            :
+                            <>
+                                <Link href={"login"} className={buttonVariants()}>
+                                    Sign in
+                                </Link>
+                                <Link href={"register"} className={buttonVariants()}>
+                                    Sign up
+                                </Link >
+                            </>
+                        }
                         <ThemeToggle />
                     </div>
 

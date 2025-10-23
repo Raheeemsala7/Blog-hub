@@ -5,64 +5,8 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/utils/supabase/server'
 import { logInAction, signupAction } from '@/lib/prisma/auth'
 import { UserRole } from '@/app/generated/prisma'
-
-export async function loginToSupabaseAction(formData: FormData) {
-    try {
-        const supabase = await createClient()
-
-
-        const credentials = {
-            email: formData.get('email') as string,
-            password: formData.get('password') as string,
-        }
-
-        const { error, data } = await supabase.auth.signInWithPassword({
-            email: credentials.email,
-            password: credentials.password,
-        })
-        if (error) {
-            console.log("Error " + error)
-            console.log("data " + data.session)
-
-            if (error.message === "Email not confirmed") {
-                return {
-                    status: "error",
-                    message: "Email not confirmed, please check your email",
-                    user: null
-                }
-            }
-            return {
-                status: "error",
-                message: error.message,
-                user: null
-            }
-        }
-
-        console.log(data)
-
-        if (data?.user) {
-            const user = data.user
-            const emailUser = user.email ?? credentials.email;
-            await logInAction(emailUser)
-        }
-
-        return { status: "success", message: "User signed up successfully", user: data.user }
-    } catch (error) {
-        if (error instanceof Error) {
-            console.log("Error " + error)
-            return {
-                status: "error",
-                message: error.message,
-                user: null
-            }
-        }
-        return {
-            status: "error",
-            message: "Unknown error occurred",
-            user: null
-        }
-    }
-}
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function signupToSupabaseAction(formData: FormData) {
 
@@ -136,6 +80,93 @@ export async function signupToSupabaseAction(formData: FormData) {
             user: null
         }
     }
+
+
+}
+
+
+export async function loginToSupabaseAction(formData: FormData) {
+    try {
+        const supabase = await createClient()
+
+
+        const credentials = {
+            email: formData.get('email') as string,
+            password: formData.get('password') as string,
+        }
+
+        const { error, data } = await supabase.auth.signInWithPassword({
+            email: credentials.email,
+            password: credentials.password,
+        })
+        if (error) {
+            console.log("Error " + error)
+            console.log("data " + data.session)
+
+            if (error.message === "Email not confirmed") {
+                return {
+                    status: "error",
+                    message: "Email not confirmed, please check your email",
+                    user: null
+                }
+            }
+            return {
+                status: "error",
+                message: error.message,
+                user: null
+            }
+        }
+
+        console.log(data)
+
+        if (data?.user) {
+            const user = data.user
+            const emailUser = user.email ?? credentials.email;
+            await logInAction(emailUser)
+        }
+
+        return { status: "success", message: "User signed up successfully", user: data.user }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log("Error " + error)
+            return {
+                status: "error",
+                message: error.message,
+                user: null
+            }
+        }
+        return {
+            status: "error",
+            message: "Unknown error occurred",
+            user: null
+        }
+    }
+}
+
+
+export const signInWithOAuthGoogle = async () => {
+
+    try {
+        const origin = (await headers()).get("origin")
+        const redirectTo = `${origin}/auth/v1/callback`
+
+        const supbase = await createClient()
+
+        const { data } = await supbase.auth.signInWithOAuth({
+            provider: "google",
+            options: {
+                redirectTo,
+            }
+        })
+        if (data.url) {
+            redirect(data.url)
+        }
+
+    } catch (error) {
+
+        redirect("/error")
+    }
+
 
 
 }
